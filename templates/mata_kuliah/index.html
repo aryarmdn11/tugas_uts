@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% from "_macros.html" import search_bar, aksi, kosong %}
+{% block title %}Data Mata Kuliah{% endblock %}
+{% block page_title %}Data Mata Kuliah{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+  {{ search_bar(q, url_for('mk_tambah'), 'Tambah Mata Kuliah') }}
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr><th style="width:60px">No</th><th>ID MK</th><th>Nama Mata Kuliah</th><th>SKS</th><th>Dosen Pengampu</th><th style="width:110px">Aksi</th></tr>
+      </thead>
+      <tbody>
+        {% for mk in data %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ mk.id_mk }}</td>
+          <td>{{ mk.nm_mk }}</td>
+          <td>{{ mk.sks }}</td>
+          <td>{{ mk.dosen.nm_dosen if mk.dosen else '-' }}</td>
+          <td>{{ aksi(url_for('mk_edit', id_mk=mk.id_mk), url_for('mk_hapus', id_mk=mk.id_mk)) }}</td>
+        </tr>
+        {% else %}
+        {{ kosong(6) }}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

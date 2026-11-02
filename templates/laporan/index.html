@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Laporan{% endblock %}
+{% block page_title %}Laporan{% endblock %}
+
+{% block content %}
+{% set daftar = [
+  ('prodi',       'Laporan Data Prodi',        'Daftar program studi beserta jenjang dan akreditasi.', 'bi-diagram-3'),
+  ('dosen',       'Laporan Data Dosen',        'Daftar dosen beserta email dan prodi.',                'bi-person-workspace'),
+  ('mahasiswa',   'Laporan Data Mahasiswa',    'Daftar mahasiswa beserta data pribadi dan prodi.',     'bi-people'),
+  ('mata-kuliah', 'Laporan Data Mata Kuliah',  'Daftar mata kuliah, SKS, dan dosen pengampu.',         'bi-book'),
+  ('krs',         'Laporan Data KRS',          'Rekap KRS lengkap (hasil join) beserta nilai.',        'bi-journal-check'),
+] %}
+<div class="row g-3">
+  {% for kode, judul, ket, ikon in daftar %}
+  <div class="col-12 col-md-6 col-xl-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title"><i class="bi {{ ikon }} text-primary me-2"></i>{{ judul }}</h5>
+        <p class="card-text text-muted flex-grow-1">{{ ket }}</p>
+        <a href="{{ url_for('laporan_detail', jenis=kode) }}" class="btn btn-primary">
+          <i class="bi bi-file-earmark-text"></i> Lihat Laporan
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

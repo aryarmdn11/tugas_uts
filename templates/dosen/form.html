@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Tambah' if mode == 'tambah' else 'Edit' }} Dosen{% endblock %}
+{% block page_title %}{{ 'Tambah' if mode == 'tambah' else 'Edit' }} Dosen{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm" style="max-width: 640px;">
+  <div class="card-body">
+    <form method="post">
+      <div class="mb-3">
+        <label class="form-label" for="nidn">NIDN</label>
+        <input type="text" class="form-control" id="nidn" name="nidn" maxlength="20" required
+               value="{{ item.nidn if item else '' }}" {{ 'readonly' if mode == 'edit' }}>
+        {% if mode == 'edit' %}<div class="form-text">NIDN merupakan kunci utama dan tidak dapat diubah.</div>{% endif %}
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="nm_dosen">Nama Dosen</label>
+        <input type="text" class="form-control" id="nm_dosen" name="nm_dosen" maxlength="100" required
+               value="{{ item.nm_dosen if item else '' }}">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" maxlength="100"
+               value="{{ item.email or '' if item else '' }}">
+      </div>
+      <div class="mb-4">
+        <label class="form-label" for="id_prodi">Prodi</label>
+        <select class="form-select" id="id_prodi" name="id_prodi" required>
+          <option value="" disabled {{ 'selected' if not (item and item.id_prodi) }}>-- Pilih prodi --</option>
+          {% for p in prodi_list %}
+          <option value="{{ p.id_prodi }}" {{ 'selected' if item and item.id_prodi == p.id_prodi }}>
+            {{ p.nm_prodi }} ({{ p.jenjang }})
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Simpan</button>
+      <a href="{{ url_for('dosen_index') }}" class="btn btn-secondary">Batal</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

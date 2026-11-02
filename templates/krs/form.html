@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Tambah' if mode == 'tambah' else 'Edit' }} KRS{% endblock %}
+{% block page_title %}{{ 'Tambah' if mode == 'tambah' else 'Edit' }} KRS{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm" style="max-width: 720px;">
+  <div class="card-body">
+    <form method="post">
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label" for="nim">Mahasiswa</label>
+          <select class="form-select" id="nim" name="nim" required>
+            <option value="" disabled {{ 'selected' if not (item and item.nim) }}>-- Pilih mahasiswa --</option>
+            {% for m in mahasiswa_list %}
+            <option value="{{ m.nim }}" {{ 'selected' if item and item.nim == m.nim }}>
+              {{ m.nim }} - {{ m.nm_mahasiswa }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="id_mk">Mata Kuliah</label>
+          <select class="form-select" id="id_mk" name="id_mk" required>
+            <option value="" disabled {{ 'selected' if not (item and item.id_mk) }}>-- Pilih mata kuliah --</option>
+            {% for mk in mk_list %}
+            <option value="{{ mk.id_mk }}" {{ 'selected' if item and item.id_mk == mk.id_mk }}>
+              {{ mk.nm_mk }} ({{ mk.sks }} SKS)
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="semester">Semester</label>
+          <input type="number" class="form-control" id="semester" name="semester" min="1" max="14" required
+                 value="{{ item.semester if item and item.semester else '' }}">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="th_akademik">Tahun Akademik</label>
+          <input type="text" class="form-control" id="th_akademik" name="th_akademik" maxlength="10"
+                 placeholder="2025/2026" required value="{{ item.th_akademik if item else '' }}">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="nilai">Nilai</label>
+          {% set nl = item.nilai if item else '' %}
+          <select class="form-select" id="nilai" name="nilai">
+            <option value="">-- Belum ada --</option>
+            {% for opsi in ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D', 'E'] %}
+            <option value="{{ opsi }}" {{ 'selected' if nl == opsi }}>{{ opsi }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Simpan</button>
+        <a href="{{ url_for('krs_index') }}" class="btn btn-secondary">Batal</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

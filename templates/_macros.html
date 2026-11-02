@@ -1,0 +1,30 @@
+{# Bilah pencarian + tombol tambah #}
+{% macro search_bar(q, tambah_url=None, tambah_label="Tambah Data") %}
+<div class="card-header bg-white d-flex flex-wrap gap-2 justify-content-between align-items-center py-3">
+  <form method="get" class="d-flex gap-2 flex-grow-1" style="max-width: 460px;">
+    <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="Cari data...">
+    <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
+    {% if q %}
+    <a href="{{ request.path }}" class="btn btn-outline-secondary" title="Reset"><i class="bi bi-x-lg"></i></a>
+    {% endif %}
+  </form>
+  {% if tambah_url %}
+  <a href="{{ tambah_url }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> {{ tambah_label }}</a>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{# Tombol edit + hapus pada baris tabel #}
+{% macro aksi(edit_url, hapus_url) %}
+<div class="d-flex gap-1">
+  <a href="{{ edit_url }}" class="btn btn-sm btn-warning" title="Edit"><i class="bi bi-pencil-square"></i></a>
+  <form method="post" action="{{ hapus_url }}" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+    <button type="submit" class="btn btn-sm btn-danger" title="Hapus"><i class="bi bi-trash"></i></button>
+  </form>
+</div>
+{% endmacro %}
+
+{# Baris kosong pada tabel #}
+{% macro kosong(colspan) %}
+<tr><td colspan="{{ colspan }}" class="text-center text-muted py-4">Data tidak ditemukan.</td></tr>
+{% endmacro %}

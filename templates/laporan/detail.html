@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}{{ judul }}{% endblock %}
+{% block page_title %}{{ judul }}{% endblock %}
+
+{% block content %}
+<div class="d-flex gap-2 mb-3 no-print">
+  <a href="{{ url_for('laporan_index') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+  <button type="button" class="btn btn-primary" onclick="window.print()"><i class="bi bi-printer"></i> Cetak</button>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="text-center mb-4">
+      <h4 class="mb-1">{{ judul }}</h4>
+      <div class="text-muted small">Sistem Informasi Manajemen Kampus &middot; Dicetak: {{ dicetak }}</div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-light">
+          <tr>{% for k in kolom %}<th>{{ k }}</th>{% endfor %}</tr>
+        </thead>
+        <tbody>
+          {% for b in baris %}
+          <tr>{% for sel in b %}<td>{{ sel }}</td>{% endfor %}</tr>
+          {% else %}
+          <tr><td colspan="{{ kolom|length }}" class="text-center text-muted py-4">Tidak ada data.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="small text-muted">Total data: {{ baris|length }}</div>
+  </div>
+</div>
+{% endblock %}

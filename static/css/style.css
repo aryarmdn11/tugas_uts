@@ -1,0 +1,153 @@
+:root {
+  --sidebar-width: 250px;
+  --sidebar-bg: #1e293b;
+  --sidebar-link: #cbd5e1;
+  --sidebar-active: #3b82f6;
+}
+
+body {
+  background-color: #f1f5f9;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  color: #fff;
+  overflow-y: auto;
+  z-index: 1040;
+  transition: transform 0.25s ease;
+}
+
+.sidebar .brand {
+  padding: 1.1rem 1.25rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar .menu-label {
+  padding: 1rem 1.25rem 0.35rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.sidebar .nav-link {
+  color: var(--sidebar-link);
+  padding: 0.65rem 1.25rem;
+  border-left: 3px solid transparent;
+}
+
+.sidebar .nav-link i {
+  width: 1.5rem;
+  display: inline-block;
+}
+
+.sidebar .nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.sidebar .nav-link.active {
+  background: rgba(59, 130, 246, 0.18);
+  border-left-color: var(--sidebar-active);
+  color: #fff;
+}
+
+/* ---------- Konten ---------- */
+#content-wrapper {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  transition: margin-left 0.25s ease;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  z-index: 1030;
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.show {
+    transform: translateX(0);
+  }
+  .sidebar-overlay.show {
+    display: block;
+  }
+  #content-wrapper {
+    margin-left: 0;
+  }
+}
+
+/* ---------- Kartu statistik ---------- */
+.stat-card {
+  border: 0;
+  border-radius: 0.75rem;
+  color: #fff;
+  transition: transform 0.15s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.stat-card .stat-icon {
+  font-size: 2.5rem;
+  opacity: 0.35;
+}
+
+.stat-card .stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.bg-grad-blue   { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.bg-grad-green  { background: linear-gradient(135deg, #22c55e, #15803d); }
+.bg-grad-orange { background: linear-gradient(135deg, #f59e0b, #b45309); }
+.bg-grad-purple { background: linear-gradient(135deg, #a855f7, #6d28d9); }
+.bg-grad-red    { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+
+.table thead th {
+  white-space: nowrap;
+}
+
+/* ---------- Halaman login ---------- */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #1e293b, #3b82f6);
+}
+
+/* ---------- Cetak laporan ---------- */
+@media print {
+  .sidebar,
+  .sidebar-overlay,
+  .navbar,
+  .no-print,
+  footer {
+    display: none !important;
+  }
+  #content-wrapper {
+    margin-left: 0 !important;
+  }
+  body {
+    background: #fff;
+  }
+  .card {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+}

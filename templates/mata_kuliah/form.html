@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Tambah' if mode == 'tambah' else 'Edit' }} Mata Kuliah{% endblock %}
+{% block page_title %}{{ 'Tambah' if mode == 'tambah' else 'Edit' }} Mata Kuliah{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm" style="max-width: 640px;">
+  <div class="card-body">
+    <form method="post">
+      <div class="mb-3">
+        <label class="form-label" for="nm_mk">Nama Mata Kuliah</label>
+        <input type="text" class="form-control" id="nm_mk" name="nm_mk" maxlength="100" required
+               value="{{ item.nm_mk if item else '' }}">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="sks">SKS</label>
+        <input type="number" class="form-control" id="sks" name="sks" min="1" max="24" required
+               value="{{ item.sks if item and item.sks else '' }}">
+      </div>
+      <div class="mb-4">
+        <label class="form-label" for="nidn">Dosen Pengampu</label>
+        <select class="form-select" id="nidn" name="nidn" required>
+          <option value="" disabled {{ 'selected' if not (item and item.nidn) }}>-- Pilih dosen --</option>
+          {% for d in dosen_list %}
+          <option value="{{ d.nidn }}" {{ 'selected' if item and item.nidn == d.nidn }}>
+            {{ d.nm_dosen }} ({{ d.nidn }})
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Simpan</button>
+      <a href="{{ url_for('mk_index') }}" class="btn btn-secondary">Batal</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

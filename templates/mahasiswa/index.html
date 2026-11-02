@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "_macros.html" import search_bar, aksi, kosong %}
+{% block title %}Data Mahasiswa{% endblock %}
+{% block page_title %}Data Mahasiswa{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+  {{ search_bar(q, url_for('mahasiswa_tambah'), 'Tambah Mahasiswa') }}
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th style="width:60px">No</th><th>NIM</th><th>Nama Mahasiswa</th><th>Jenis Kelamin</th>
+          <th>Tgl Lahir</th><th>Alamat</th><th>Prodi</th><th style="width:110px">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in data %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ m.nim }}</td>
+          <td>{{ m.nm_mahasiswa }}</td>
+          <td>{{ m.jns_kelamin or '-' }}</td>
+          <td>{{ m.tgl_lahir.strftime('%d-%m-%Y') if m.tgl_lahir else '-' }}</td>
+          <td>{{ m.alamat or '-' }}</td>
+          <td>{{ m.prodi.nm_prodi if m.prodi else '-' }}</td>
+          <td>{{ aksi(url_for('mahasiswa_edit', nim=m.nim), url_for('mahasiswa_hapus', nim=m.nim)) }}</td>
+        </tr>
+        {% else %}
+        {{ kosong(8) }}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

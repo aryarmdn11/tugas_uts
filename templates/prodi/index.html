@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% from "_macros.html" import search_bar, aksi, kosong %}
+{% block title %}Data Prodi{% endblock %}
+{% block page_title %}Data Program Studi{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+  {{ search_bar(q, url_for('prodi_tambah'), 'Tambah Prodi') }}
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr><th style="width:60px">No</th><th>ID</th><th>Nama Prodi</th><th>Jenjang</th><th>Akreditasi</th><th style="width:110px">Aksi</th></tr>
+      </thead>
+      <tbody>
+        {% for p in data %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ p.id_prodi }}</td>
+          <td>{{ p.nm_prodi }}</td>
+          <td>{{ p.jenjang }}</td>
+          <td>{{ p.akreditasi or '-' }}</td>
+          <td>{{ aksi(url_for('prodi_edit', id_prodi=p.id_prodi), url_for('prodi_hapus', id_prodi=p.id_prodi)) }}</td>
+        </tr>
+        {% else %}
+        {{ kosong(6) }}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

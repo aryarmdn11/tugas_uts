@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% from "_macros.html" import search_bar, kosong %}
+{% block title %}Data KRS Lengkap{% endblock %}
+{% block page_title %}Data KRS Lengkap (Query Join){% endblock %}
+
+{% block content %}
+<div class="alert alert-info small">
+  <i class="bi bi-info-circle me-1"></i>
+  Data berikut diambil dengan <code>JOIN</code> tabel <b>krs</b>, <b>mahasiswa</b>, dan <b>mata_kuliah</b>.
+</div>
+<div class="card shadow-sm">
+  {{ search_bar(q) }}
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th style="width:60px">No</th><th>NIM</th><th>Nama Mahasiswa</th><th>Nama Mata Kuliah</th>
+          <th>SKS</th><th>Semester</th><th>Tahun Akademik</th><th>Nilai</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in data %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ r.nim }}</td>
+          <td>{{ r.nm_mahasiswa }}</td>
+          <td>{{ r.nm_mk }}</td>
+          <td>{{ r.sks }}</td>
+          <td>{{ r.semester }}</td>
+          <td>{{ r.th_akademik }}</td>
+          <td>{{ r.nilai or '-' }}</td>
+        </tr>
+        {% else %}
+        {{ kosong(8) }}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
